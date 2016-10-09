@@ -20,7 +20,7 @@ Mika Straka
 
 ### This Version
 The newest version can be found on
-[https://github.com/tsakim/bicmi](https://github.com/tsakim/bicmi).
+[https://github.com/tsakim/pbicm](https://github.com/tsakim/bicmi).
 
 ## Dependencies
 * [ctypes](https://docs.python.org/2/library/ctypes.html)
@@ -40,18 +40,18 @@ row-nodes and `False` for the column-nodes.
 
 Import the module
 ```python
-from src.bicmi import BiCMa
+from src.pbicm import PBiCM
 ```
 and initialize the partial Bipartite Configuration Model with one sided
 constraint for the matrix `input_mat` with 
 ```python
-cma = BiCMa(bin_mat=td, constraint=<constraint>)
+cma = PBiCM(bin_mat=td, constraint=<constraint>)
 ```
 where `<constraint> == True` constrains the degrees of the row-nodes and
 `<constraint> == False` the degrees of the column nodes.
 
 In order to analyze the similarity of the row-layer nodes and to save the
-p-values of the corresponding Lambda-motifs in the folder `bicmi/output/`,
+p-values of the corresponding Lambda-motifs in the folder `pbicm/output/`,
 use
 ```python
 cma.lambda_motifs_main(bip_set=True, write=True, filename=<filename>, delim='\t') ```
@@ -62,29 +62,29 @@ cma.lambda_motifs_main(bip_set=False, write=True, filename=<filename>, delim='\t
 ```
 `bip_set` defines the bipartite node set for which the p-values should be
 saved. The default name of the ouput file is
-`bicmi_pval_constr_<constraint>proj_<bip_set>.csv`
+`pbicm_pval_constr_<constraint>proj_<bip_set>.csv`
 
 ### NB: Main folder
 Note that saving the files requires the name of the main directory,
-which contains the folder `src` and thus the file `src/bicmi.py`.
-If the name of the main directory is *not* the default `bicmi`, the BiCMa
+which contains the folder `src` and thus the file `src/pbicm.py`.
+If the name of the main directory is *not* the default `pbicm`, the PBiCM
 instance has to be initialized as 
 ```python
-cma = BiCMa(bin_mat=td, constraint=<constraint>, main_dir=<main directory name>)
+cma = PBiCM(bin_mat=td, constraint=<constraint>, main_dir=<main directory name>)
 ```
 
 ## Testing
 The methods have been implemented using the doctest module. To run the tests,
 execute 
 ```
-$ python -m doctest bicmi_tests.txt
+$ python -m doctest pbicm_tests.txt
 ```
 in the folder `src` in the command line. If you want to run the tests in
 verbose mode, use 
 ```
-$ python -m doctest -v bicmi_tests.txt
+$ python -m doctest -v pbicm_tests.txt
 ```
-Note that `bicmi.py` and `bicmi_tests.txt` have to be in the same directory.
+Note that `pbicm.py` and `pbicm_tests.txt` have to be in the same directory.
 
 ## References
 * \[1\] [Saracco, Di Clemente, Gabrielli, Squartini - Randomizing bipartite networks:
