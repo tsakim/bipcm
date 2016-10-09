@@ -1,0 +1,8 @@
+*.pyc
+hs2007_MM_2000.dat
+bicm_a_run.py
+TODO
+output/FalseProds2000.csv
+output/hs2007_BiCMa_P_A_products_2000.csv
+output/hs2007_BiCMa_P_B_products_2000.csv
+output/TrueProds2000.csv

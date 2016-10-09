@@ -1,0 +1,4 @@
+The folder `bicmi/output/` will contain the output files produced by the
+`src/bicmi.py` algorithms. 
+Please note that this folder structure is required.  If another structure is
+necessary, edit the method `BiCMa.save_matrix` in the module `bicmi.py`.
