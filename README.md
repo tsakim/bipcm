@@ -23,8 +23,7 @@ The newest version can be found on
 [https://github.com/tsakim/pbicm](https://github.com/tsakim/bicmi).
 
 ## Dependencies
-* [ctypes](https://docs.python.org/2/library/ctypes.html)
-* [multiprocessing](https://docs.python.org/2/library/multiprocessing.html)
+* [os](https://docs.python.org/2/library/os.html)
 * [scipy](https://www.scipy.org/)
 * [numpy](www.numpy.org)
 * [doctest](https://docs.python.org/2/library/doctest.html)
@@ -89,5 +88,6 @@ Note that `pbicm.py` and `pbicm_tests.txt` have to be in the same directory.
 ## References
 * \[1\] [Saracco, Di Clemente, Gabrielli, Squartini - Randomizing bipartite networks:
 the case of the World Trade Web](http://www.nature.com/articles/srep10595)
+
 ---
 Copyright (c) 2015-2016 Mika J. Straka 
