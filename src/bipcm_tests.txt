@@ -8,15 +8,15 @@ Author:
 
 Description:
     This file contains the doctest test cases for the functions and methods
-    defined in pbicm.
+    defined in bipcm.
 
 Usage:
     To run the test, execute
-        $ python -m doctest pbicm_tests.txt
+        $ python -m doctest bipcm_tests.txt
     in the command line. If you want to run the tests in verbose mode, use
-        $ python -m doctest -v pbicm_tests.txt
+        $ python -m doctest -v bipcm_tests.txt
 
-    Note that pbicm.py and pbicm_tests.txt have to be in the same
+    Note that bipcm.py and bipcm_tests.txt have to be in the same
     directory.
 
 ################################################################################
@@ -24,47 +24,47 @@ Usage:
 ################################################################################
 
     >>> import numpy as np
-    >>> from pbicm import PBiCM
+    >>> from bipcm import BiPCM
 
-# PBiCM.set_degree_seq ---------------------------------------------------------
+# BiPCM.set_degree_seq ---------------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 1, 1]])
-    >>> cm = PBiCM(td, True, 'pbicm')
+    >>> cm = BiPCM(td, True, 'bipcm')
     >>> cm.set_degree_seq()
     array([ 2.,  3.,  2.,  2.,  1.])
 
-# PBiCM.get_edge_prob_seq ------------------------------------------------------
+# BiPCM.get_edge_prob_seq ------------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 1, 1]])
-    >>> cm = PBiCM(td, True, 'pbicm')
+    >>> cm = BiPCM(td, True, 'bipcm')
     >>> np.around(cm.get_edge_prob_seq(), decimals=2)
     array([ 0.67,  1.  ,  1.  ,  1.  ,  0.5 ])
 
-# PBiCM.get_plambda_matrix -----------------------------------------------------
+# BiPCM.get_plambda_matrix -----------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 0, 1]])
-    >>> cm = PBiCM(td, True, 'pbicm')
+    >>> cm = BiPCM(td, True, 'bipcm')
     >>> np.around(cm.get_plambda_matrix(), decimals=2)
     array([[ 0.44,  0.44],
            [ 0.  ,  0.44]])
-    >>> cm = PBiCM(td, False, 'pbicm')
+    >>> cm = BiPCM(td, False, 'bipcm')
     >>> np.around(cm.get_plambda_matrix(), decimals=2)
     array([[ 1.  ,  0.5 ,  0.5 ],
            [ 0.  ,  0.25,  0.25],
            [ 0.  ,  0.  ,  0.25]])
 
     >>> td = np.array([[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
-    >>> cm = PBiCM(td, False, 'pbicm')
+    >>> cm = BiPCM(td, False, 'bipcm')
     >>> np.around(cm.get_plambda_matrix(), decimals=2)
     array([[ 0.56,  0.56,  0.56,  0.56],
            [ 0.  ,  0.56,  0.56,  0.56],
            [ 0.  ,  0.  ,  0.56,  0.56],
            [ 0.  ,  0.  ,  0.  ,  0.56]])
 
-# PBiCM.get_lambda_motif_matrix ------------------------------------------------------
+# BiPCM.get_lambda_motif_matrix ------------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 0, 1], [1, 1, 0]])
-    >>> cm = PBiCM(td, True, 'pbicm')
+    >>> cm = BiPCM(td, True, 'bipcm')
     >>> cm.get_lambda_motif_matrix(True)
     array([[0, 1, 2],
            [1, 0, 1],
@@ -75,7 +75,7 @@ Usage:
            [1, 0, 0]])
 
     >>> td = np.array([[1, 1, 0], [1, 0, 1]])
-    >>> cm = PBiCM(td, True, 'pbicm')
+    >>> cm = BiPCM(td, True, 'bipcm')
     >>> cm.get_lambda_motif_matrix(True)
     array([[0, 1],
            [1, 0]])
@@ -84,17 +84,17 @@ Usage:
            [1, 0, 0],
            [1, 0, 0]])
     >>> td = np.array([[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
-    >>> cm = PBiCM(td, False, 'pbicm')
+    >>> cm = BiPCM(td, False, 'bipcm')
     >>> np.around(cm.get_lambda_motif_matrix(), decimals=1)
     array([[0, 2, 2, 2],
            [2, 0, 2, 2],
            [2, 2, 0, 2],
            [2, 2, 2, 0]])
 
-# PBiCM.get_lambda_pvalues ---------------------------------------------------------
+# BiPCM.get_lambda_pvalues ---------------------------------------------------------
 
     >>> td = np.array([[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
-    >>> cm = PBiCM(td, False, 'pbicm')
+    >>> cm = BiPCM(td, False, 'bipcm')
     >>> pl2m = cm.get_plambda_matrix()
     >>> nl2m = cm.get_lambda_motif_matrix(False)
     >>> np.around(cm.get_lambda_pvalues(pl2m, nl2m, False), decimals=2)
@@ -109,7 +109,7 @@ Usage:
            [ 0.  ,  0.  ,  0.  ,  0.  ]])
 
     >>> td = np.array([[0, 1, 1], [1, 0, 0]])
-    >>> cm = PBiCM(td, True, 'pbicm')
+    >>> cm = BiPCM(td, True, 'bipcm')
     >>> np.around(cm.eprob_seq, decimals=2)
     array([ 0.67,  0.33,  0.5 ,  0.5 ,  0.5 ])
     >>> pl2m = cm.get_plambda_matrix()

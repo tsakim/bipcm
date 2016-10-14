@@ -1,10 +1,10 @@
 # Partial Bipartite Configuration Model with one-sided constraints for Python
 
 ## About
-The module contains a Python implementation of the partial Bipartite Configuration
-Model with one-sided degree constraints (pBiCM), which can be used as a
-statistical null model for undirected and binary bipartite networks (see
-reference \[1\]).
+The module contains a Python implementation of the Bipartite Partial
+Configuration Model with one-sided degree constraints (BiPCM), which can be
+used as a statistical null model for undirected and binary bipartite networks
+(see reference \[1\]).
 
 Given the biadjacency matrix of a bipartite network, the probabilities of links
 between nodes of different bipartite network layers are calculated for the
@@ -39,12 +39,12 @@ row-nodes and `False` for the column-nodes.
 
 Import the module
 ```python
-from src.pbicm import PBiCM
+from src.pbicm import BiPCM
 ```
-and initialize the partial Bipartite Configuration Model with one sided
+and initialize the Bipartite Partial Configuration Model with one sided
 constraint for the matrix `input_mat` with 
 ```python
-cma = PBiCM(bin_mat=td, constraint=<constraint>)
+cma = BiPCM(bin_mat=td, constraint=<constraint>)
 ```
 where `<constraint> == True` constrains the degrees of the row-nodes and
 `<constraint> == False` the degrees of the column nodes.
@@ -66,10 +66,10 @@ saved. The default name of the ouput file is
 ### NB: Main folder
 Note that saving the files requires the name of the main directory,
 which contains the folder `src` and thus the file `src/pbicm.py`.
-If the name of the main directory is *not* the default `pbicm`, the PBiCM
+If the name of the main directory is *not* the default `pbicm`, the BiPCM
 instance has to be initialized as 
 ```python
-cma = PBiCM(bin_mat=td, constraint=<constraint>, main_dir=<main directory name>)
+cma = BiPCM(bin_mat=td, constraint=<constraint>, main_dir=<main directory name>)
 ```
 
 ## Testing

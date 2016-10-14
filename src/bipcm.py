@@ -3,14 +3,14 @@
 Created on Tue Apr 05 10:00:21 2016
 
 Module:
-    pbicm - Bipartite Configuration Model with one-sided constraints
+    bipcm - Bipartite Configuration Model with one-sided constraints
 
 Author:
     Mika Straka
 
 Description:
-    Implementation of the partial Bipartite Configuration Model with one-sided
-    constraint (PBiCM).
+    Implementation of the Bipartite Partial Configuration Model with one-sided
+    constraint (BiPCM).
 
     Given the biadjacency matrix of a bipartite graph in the form of a binary
     array as input, the module calculates the link probabilities for the
@@ -27,16 +27,16 @@ Usage:
     "False" and the nodes are called "row-nodes" and "column-nodes",
     respectively.
 
-    Initialize the partial Bipartite Configuration Model with one sided
+    Initialize the Bipartite Partial Configuration Model with one sided
     constraint for the matrix <td> with
 
-        $ cma = PBiCM(bin_mat=td, constraint=<constraint>)
+        $ cma = BiPCM(bin_mat=td, constraint=<constraint>)
 
     where <constraint> == True constrains the degrees of the row-nodes and
     <constraint> == False the degrees of the column nodes.
 
     In order to analyze the similarity of the row-layer nodes and to save the
-    p-values of the corresponding Lambda-motifs in the folder "pbicm/output/",
+    p-values of the corresponding Lambda-motifs in the folder "bipcm/output/",
     use
 
         $ cma.lambda_motifs_main(bip_set=True, write=True, filename=<filename>, 
@@ -49,15 +49,15 @@ Usage:
 
    "bip_set" defines the bipartite node set for which the p-values should be
    saved. The default name of the ouput file is
-        'pbicm_pval_constr_<constraint>proj_<bip_set>.csv'
+        'bipcm_pval_constr_<constraint>proj_<bip_set>.csv'
 
 NB Main folder
     Note that saving the files requires the name of the main directory
     which contains the folder "src" and itself contains the file bicm.py.
-    If the folder name is NOT the default "pbicm", the BiCM instance has to be
+    If the folder name is NOT the default "bipcm", the BiCM instance has to be
     initialized as
 
-        $ cma = PBiCM(bin_mat=td, constraint=<constraint>,
+        $ cma = BiPCM(bin_mat=td, constraint=<constraint>,
                         main_dir=<main directory name>)
 """
 
@@ -67,13 +67,13 @@ from scipy.stats import binom
 from poibin.poibin import PoiBin
 
 
-class PBiCM:
+class BiPCM:
     """Create the Bipartite Configuration model with one-sided constraint for
     the input matrix and analyze the Lambda motifs.
     """
 
-    def __init__(self, bin_mat, constraint, main_dir='pbicm'):
-        """Initialize the parameters of the PBiCM.
+    def __init__(self, bin_mat, constraint, main_dir='bipcm'):
+        """Initialize the parameters of the BiPCM.
 
         :param bin_mat: binary input matrix describing the biadjacency matrix
                 of a bipartite graph with the nodes of one layer along the rows
@@ -226,7 +226,7 @@ class PBiCM:
                     constr = "rows"
                 elif not self.const_set:
                     constr = "columns"
-                fname = 'pbicm_pval_' + 'constr_' + constr + 'proj_' +  b  + '.csv'
+                fname = 'bipcm_pval_' + 'constr_' + constr + 'proj_' +  b  + '.csv'
             else:
                 fname = filename
             self.save_matrix(pval_mat, filename=fname, delim=delim)
@@ -324,10 +324,10 @@ class PBiCM:
 # ------------------------------------------------------------------------------
 
     @staticmethod
-    def get_main_dir(main_dir_name='pbicm'):
+    def get_main_dir(main_dir_name='bipcm'):
         """Return the absolute path to the main directory which contains the
         folders "src" and "output".
-        Note that the default directory name is "pbicm".
+        Note that the default directory name is "bipcm".
 
         :param main_dir_name: name of the main directory of the program.
         :type main_dir_name: string
