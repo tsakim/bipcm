@@ -63,23 +63,14 @@ cma.lambda_motifs_main(bip_set=False, write=True, filename=<filename>, delim='\t
 saved. The default name of the ouput file is
 `pbicm_pval_constr_<constraint>_proj_<bip_set>.csv`.
 
-It is also possible to calculate the probabilites of two nodes (i, j) having 0,
-1, ..., M nearest neighbors in common, where M is the number of nodes in the
-opposite bipartite layer. To do so for the row-nodes, execute 
+It is also possible to calculate the probabilites of two nodes (i, j) having 0, 1, ..., M nearest neighbors in common, where M is the number of nodes in the opposite bipartite layer. To do so for the row-nodes, execute 
 ```python
 cma.save_lambda_probdist(bip_set=True, write=True, filename=<filename>, delim='\t')
 ```
-For the column-nodes, use `bip_set=False`.The default name of the ouput file is
-`pbicm_lambdaprob_contr_<constraint>_layer_<bip_set>.csv`.
+For the column-nodes, use `bip_set=False`.The default name of the ouput file is `pbicm_lambdaprob_contr_<constraint>_layer_<bip_set>.csv`.
 
-Note that, if `<constraint> == <bip_set>`, the output file contains $N(N - 1)$
-rows for the node pairs (1, 2), (1, 3), ..., (1, N), (2, 3), ..., (N - 1, N),
-and M + 1 columns contain the probabilities of having 0, 1, ..., M common
-neighbors.
-If `<constraint> != <bip_set>`, the file contains only one row containing the
-probabilities for two nodes (i, j) sharing 0, 1, ..., M + 1 common neighbors,
-since the probability distribution is the same for all node pairs in the
-bipartite nodes set `bip_set`.  
+Note that, if `<constraint> == <bip_set>`, the output file contains N(N - 1) rows for the node pairs (1, 2), (1, 3), ..., (1, N), (2, 3), ..., (N - 1, N), and M + 1 columns contain the probabilities of having 0, 1, ..., M common neighbors.
+If `<constraint> != <bip_set>`, the file contains only one row containing the probabilities for two nodes (i, j) sharing 0, 1, ..., M + 1 common neighbors, since the probability distribution is the same for all node pairs in the bipartite nodes set `bip_set`.  
 
 ### NB: Main folder
 Note that saving the files requires the name of the main directory,
