@@ -90,7 +90,7 @@ class BiPCM:
         self.check_input_matrix_is_binary()
         [self.num_rows, self.num_columns] = self.bin_mat.shape
         self.eprob_seq = self.get_edge_prob_seq()
-        self.main_dir = self.get_main_dir()
+        self.main_dir = self.get_main_dir(main_dir)
 
 # ------------------------------------------------------------------------------
 # Initialization
@@ -103,7 +103,8 @@ class BiPCM:
         assert np.all(np.logical_or(self.bin_mat == 0, self.bin_mat == 1)), \
             "Input matrix is not binary."
 
-    def check_constraint(self, constr):
+    @staticmethod
+    def check_constraint(constr):
         """Check that the constraint is either True of False."""
         assert constr in [False, True], \
             "Constraint has to be True or False."
@@ -133,7 +134,7 @@ class BiPCM:
         return eprob_seq
 
 # ------------------------------------------------------------------------------
-# Total log-likelihood of the observed Lambda motifs in the input matrix 
+# Total log-likelihood of the observed Lambda motifs in the input matrix
 # ------------------------------------------------------------------------------
 
     def lambda_loglike(self, bip_set=False):
@@ -142,8 +143,6 @@ class BiPCM:
 
         :param bip_set: analyze row-nodes (True) or column-nodes (False)
         :type bip_set: bool
-        :param write: if True, the pvalues are saved in an external file
-        :type write: bool
         """
         plam_mat = self.get_plambda_matrix()
         nlam_mat = self.get_lambda_motif_matrix(bip_set)
@@ -209,6 +208,8 @@ class BiPCM:
         :type bip_set: bool
         :param write: if True, the pvalues are saved in an external file
         :type write: bool
+        :param filename: name of the output file, default name is
+            bipcm_pval_constr_<contraint>_proj_<rows OR columns>.csv
         """
         plam_mat = self.get_plambda_matrix()
         nlam_mat = self.get_lambda_motif_matrix(bip_set)
@@ -226,7 +227,7 @@ class BiPCM:
                     constr = "rows"
                 elif not self.const_set:
                     constr = "columns"
-                fname = 'bipcm_pval_' + 'constr_' + constr + 'proj_' +  b  + '.csv'
+                fname = 'bipcm_pval_constr_' + constr + '_proj_' + b + '.csv'
             else:
                 fname = filename
             self.save_matrix(pval_mat, filename=fname, delim=delim)
@@ -238,7 +239,7 @@ class BiPCM:
         the degree constraints on the node set self.const_set.
 
         NB:
-            The lower triangular part excludint the diagonal is set to 0 since
+            The lower triangular part excluding the diagonal is set to 0 since
             the matrix is symmetric.
         """
         if self.const_set:
@@ -318,6 +319,77 @@ class BiPCM:
                     pval_mat[i, j] = 1. - bn.cdf(nlam_mat[i, j]) \
                                      + bn.pmf(nlam_mat[i, j])
         return pval_mat
+
+    def save_lambda_probdist(self, bip_set=False, write=True, filename=None,
+                           delim='\t'):
+        """Obtain and save the p-values of the Lambda motifs observed in the
+        binary input matrix for the node set defined by bip_set.
+
+        :param bip_set: analyze row-nodes (True) or column-nodes (False)
+        :type bip_set: bool
+        :param write: if True, the pvalues are saved in an external file
+        :type write: bool
+        :param filename: name of the output file, default name is
+            bipcm_pval_constr_<contraint>_proj_<rows OR columns>.csv
+        """
+        plam_mat = self.get_plambda_matrix()
+        lambdaprobs_mat = self.get_lambda_probdist(plam_mat, bip_set)
+        if write:
+            if filename is None:
+                if bip_set:
+                    b = 'rows'
+                elif not bip_set:
+                    b = 'columns'
+                else:
+                    errmsg = "'" + str(bip_set) + "' " + 'not supported.'
+                    raise NameError(errmsg)
+                if self.const_set:
+                    constr = "rows"
+                elif not self.const_set:
+                    constr = "columns"
+                fname = 'bipcm_lambdaprob_constr_' + constr + '_layer_' + b + \
+                        '.csv'
+            else:
+                fname = filename
+            self.save_matrix(lambdaprobs_mat, filename=fname, delim=delim)
+        else:
+            return lambdaprobs_mat
+
+    def get_lambda_probdist(self, plam_mat, bip_set=False):
+        """Return a matrix which contains the probabilities for each node pair
+        (i, j) in the bipartite node set bip_set of observing every possible
+        number of common neighbors in the opposite bipartite layer.
+
+        :param plam_mat: matrix of Lambda motif probabilities
+        :type plam_mat: np.array
+        :param bip_set: selects row-nodes (True) or column-nodes (False)
+        :type bip_set: bool
+        """
+        if bip_set:
+            n = self.num_rows
+            m = self.num_columns
+
+        elif not bip_set:
+            n = self.num_columns
+            m = self.num_rows
+        else:
+            errmsg = "'" + str(bip_set) + "' " + 'not supported.'
+            raise NameError(errmsg)
+
+        lambda_values = np.arange(m + 1)
+
+        if bip_set != self.const_set:
+            lambdaprobs_mat = np.zeros([1, m + 1])
+            pb = PoiBin(plam_mat[np.diag_indices_from(plam_mat)])
+            lambdaprobs_mat[0, :] = pb.pmf(lambda_values)
+        elif bip_set == self.const_set:
+            lambdaprobs_mat = np.zeros([n * (n - 1) / 2, m + 1])
+            # if the sets correspond, the matrix dimensions should be the same
+            for i in xrange(n):
+                for j in xrange(i + 1, n):
+                    bn = binom(m, plam_mat[i, j])
+                    lambdaprobs_mat[i + j - 1, :] = bn.pmf(lambda_values)
+        return lambdaprobs_mat
 
 # ------------------------------------------------------------------------------
 # Auxiliary methods
