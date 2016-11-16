@@ -368,7 +368,6 @@ class BiPCM:
         if bip_set:
             n = self.num_rows
             m = self.num_columns
-
         elif not bip_set:
             n = self.num_columns
             m = self.num_rows
