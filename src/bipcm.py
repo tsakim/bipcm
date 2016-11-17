@@ -355,10 +355,13 @@ class BiPCM:
                     constr = "rows"
                 else:
                     constr = "columns"
-                fname = 'bipcm_lambdaprob_constr_' + constr + '_layer_' + b + \
-                        '.csv'
+                fname = 'bipcm_lambdaprob_constr_' + constr + '_layer_' + b
             else:
                 fname = filename
+            if binary:
+                fname += '.npy'
+            else:
+                fname += '.csv'
             self.save_matrix(lambdaprobs_mat, filename=fname, delim=delim,
                              binary=binary)
         else:
