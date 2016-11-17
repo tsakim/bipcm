@@ -225,7 +225,7 @@ class BiPCM:
                     raise NameError(errmsg)
                 if self.const_set:
                     constr = "rows"
-                elif not self.const_set:
+                else:
                     constr = "columns"
                 fname = 'bipcm_pval_constr_' + constr + '_proj_' + b + '.csv'
             else:
@@ -320,10 +320,15 @@ class BiPCM:
                                      + bn.pmf(nlam_mat[i, j])
         return pval_mat
 
+# ------------------------------------------------------------------------------
+# Probability distributions for Lambda values
+# ------------------------------------------------------------------------------
+
     def save_lambda_probdist(self, bip_set=False, write=True, filename=None,
-                           delim='\t'):
-        """Obtain and save the p-values of the Lambda motifs observed in the
-        binary input matrix for the node set defined by bip_set.
+                             delim='\t', binary=True):
+        """Obtain and save the probabilities of all possible values of the
+        Lambda motifs for the node set defined by bip_set. The matrix can
+        either be saved as human-readable ASCII or as a binary Numpy file.
 
         :param bip_set: analyze row-nodes (True) or column-nodes (False)
         :type bip_set: bool
@@ -331,6 +336,9 @@ class BiPCM:
         :type write: bool
         :param filename: name of the output file, default name is
             bipcm_pval_constr_<contraint>_proj_<rows OR columns>.csv
+        :param delim: delimiter to use if file is saved as .csv
+        :param binary: if true, save as binary .npy file. Otherwise as .csv
+                        file
         """
         plam_mat = self.get_plambda_matrix()
         lambdaprobs_mat = self.get_lambda_probdist(plam_mat, bip_set)
@@ -345,13 +353,14 @@ class BiPCM:
                     raise NameError(errmsg)
                 if self.const_set:
                     constr = "rows"
-                elif not self.const_set:
+                else:
                     constr = "columns"
                 fname = 'bipcm_lambdaprob_constr_' + constr + '_layer_' + b + \
                         '.csv'
             else:
                 fname = filename
-            self.save_matrix(lambdaprobs_mat, filename=fname, delim=delim)
+            self.save_matrix(lambdaprobs_mat, filename=fname, delim=delim,
+                             binary=binary)
         else:
             return lambdaprobs_mat
 
@@ -387,12 +396,27 @@ class BiPCM:
             for i in xrange(n):
                 for j in xrange(i + 1, n):
                     bn = binom(m, plam_mat[i, j])
-                    lambdaprobs_mat[i + j - 1, :] = bn.pmf(lambda_values)
+                    k = self.triumat2flat_idx(i, j, n)
+                    lambdaprobs_mat[k, :] = bn.pmf(lambda_values)
+        else:
+            errmsg = "'" + str(bip_set) + "' " + 'not supported.'
+            raise NameError(errmsg)
         return lambdaprobs_mat
 
 # ------------------------------------------------------------------------------
 # Auxiliary methods
 # ------------------------------------------------------------------------------
+
+    @staticmethod
+    def triumat2flat_idx(idx_i, idx_j, n):
+        """Convert index couple (i, j) into index in one-dimensional array index
+        for the upper triangular part of a square matrix with dimension n. I.e.
+        idx_i runs from 0, ..., n and idx_j runs from idx_i + 1, ..., n
+
+        NB: the returned indices start from 0.
+        """
+        return int((idx_i + 1) * n - (idx_i + 2) * (idx_i + 1) / 2.
+                   - (n - (idx_j + 1)) - 1)
 
     @staticmethod
     def get_main_dir(main_dir_name='bipcm'):
@@ -407,15 +431,20 @@ class BiPCM:
         dirpath = s[:s.index(main_dir_name) + len(main_dir_name) + 1]
         return dirpath
 
-    def save_matrix(self, mat, filename, delim='\t'):
+    def save_matrix(self, mat, filename, delim='\t', binary=False):
         """Save the input matrix in a csv-file.
 
         :param mat: two-dimensional matrix
         :param filename: name of the output file
         :param delim: delimiter between values in file.
+        :param binary: if true, save as binary .npy file. Otherwise as .csv
+                        file
         """
         fname = ''.join([self.main_dir, '/output/', filename])
-        np.savetxt(fname, mat, delimiter=delim)
+        if binary:
+            np.save(fname, mat)
+        else:
+            np.savetxt(fname, mat, delimiter=delim)
 
 ################################################################################
 # Main
