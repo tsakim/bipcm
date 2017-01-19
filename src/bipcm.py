@@ -411,44 +411,93 @@ class BiPCM:
 # ------------------------------------------------------------------------------
 
     @staticmethod
-    def triumat2flat_idx(idx_i, idx_j, n):
-        """Convert index couple (i, j) into index in one-dimensional array index
-        for the upper triangular part of a square matrix with dimension n. I.e.
-        idx_i runs from 0, ..., n and idx_j runs from idx_i + 1, ..., n
+    def triumat2flat_idx(i, j, n):
+        """Convert an matrix index couple to a flattened array index.
 
-        NB: the returned indices start from 0.
+        Given a square matrix of dimension :math:`n` and an index couple
+        :math:`(i, j)` *of the upper triangular part* of the matrix, the
+        function returns the index which the matrix element would have in a
+        flattened array.
+
+        .. note::
+            * :math:`i \\in [0, ..., n - 1]`
+            * :math:`j \\in [i + 1, ..., n - 1]`
+            * returned index :math:`\\in [0,\\, n (n - 1) / 2 - 1]`
+
+        :param i: row index
+        :type i: int
+        :param j: column index
+        :type j: int
+        :param n: dimension of the square matrix
+        :type n: int
+        :returns: flattened array index
+        :rtype: int
         """
-        return int((idx_i + 1) * n - (idx_i + 2) * (idx_i + 1) / 2.
-                   - (n - (idx_j + 1)) - 1)
+        return int((i + 1) * n - (i + 2) * (i + 1) / 2. - (n - (j + 1)) - 1)
+
+#    @staticmethod
+#    def triumat2flat_idx(idx_i, idx_j, n):
+#        """Convert index couple (i, j) into index in one-dimensional array index
+#        for the upper triangular part of a square matrix with dimension n. I.e.
+#        idx_i runs from 0, ..., n and idx_j runs from idx_i + 1, ..., n
+#
+#        NB: the returned indices start from 0.
+#        """
+#        return int((idx_i + 1) * n - (idx_i + 2) * (idx_i + 1) / 2.
+#                   - (n - (idx_j + 1)) - 1)
+
+#    @staticmethod
+#    def get_main_dir(main_dir_name='bipcm'):
+#        """Return the absolute path to the main directory which contains the
+#        folders "src" and "output".
+#        Note that the default directory name is "bipcm".
+#
+#        :param main_dir_name: name of the main directory of the program.
+#        :type main_dir_name: string
+#        """
+#        s = os.getcwd()
+#        dirpath = s[:s.index(main_dir_name) + len(main_dir_name) + 1]
+#        return dirpath
+
+#    def save_matrix(self, mat, filename, delim='\t', binary=False):
+#        """Save the input matrix in a csv-file.
+#
+#        :param mat: two-dimensional matrix
+#        :param filename: name of the output file
+#        :param delim: delimiter between values in file.
+#        :param binary: if true, save as binary .npy file. Otherwise as .csv
+#                        file
+#        """
+#        fname = ''.join([self.main_dir, '/output/', filename])
+#        if binary:
+#            np.save(fname, mat)
+#        else:
+#            np.savetxt(fname, mat, delimiter=delim)
 
     @staticmethod
-    def get_main_dir(main_dir_name='bipcm'):
-        """Return the absolute path to the main directory which contains the
-        folders "src" and "output".
-        Note that the default directory name is "bipcm".
+    def save_matrix(mat, filename, delim='\t', binary=False):
+        """Save the matrix ``mat`` in the file ``filename``.
 
-        :param main_dir_name: name of the main directory of the program.
-        :type main_dir_name: string
-        """
-        s = os.getcwd()
-        dirpath = s[:s.index(main_dir_name) + len(main_dir_name) + 1]
-        return dirpath
+        The matrix can either be saved as a binary NumPy ``.npy`` file or as a
+        human-readable CSV file.
 
-    def save_matrix(self, mat, filename, delim='\t', binary=False):
-        """Save the input matrix in a csv-file.
+        .. note:: The relative path has to be provided in the filname, e.g.
+                *../data/pvalue_matrix.csv*
 
         :param mat: two-dimensional matrix
+        :type mat: numpy.array
         :param filename: name of the output file
-        :param delim: delimiter between values in file.
-        :param binary: if true, save as binary .npy file. Otherwise as .csv
-                        file
+        :type filename: str
+        :param delim: delimiter between values in file
+        :type delim: str
+        :param binary: if ``True``, save as binary ``.npy``,
+                     otherwise as CSV a file
+        :type binary: bool
         """
-        fname = ''.join([self.main_dir, '/output/', filename])
         if binary:
-            np.save(fname, mat)
+            np.save(filename, mat)
         else:
-            np.savetxt(fname, mat, delimiter=delim)
-
+            np.savetxt(filename, mat, delimiter=delim)
 ################################################################################
 # Main
 ################################################################################
