@@ -7,3 +7,4 @@ output/hs2007_BiCMa_P_A_products_2000.csv
 output/hs2007_BiCMa_P_B_products_2000.csv
 output/TrueProds2000.csv
 *.idea
+output/

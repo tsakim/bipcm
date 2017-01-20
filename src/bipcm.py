@@ -103,7 +103,11 @@ class BiPCM:
 # ------------------------------------------------------------------------------
 
     def check_input_matrix_is_binary(self):
-        """Check that the entries of the input matrix are 0 or 1."""
+        """Check that the entries of the input matrix are 0 or 1.
+
+        :raise AssertionError: raise an error if the input matrix is not
+            binary
+        """
         assert np.all(np.logical_or(self.bin_mat == 0, self.bin_mat == 1)), \
             "Input matrix is not binary."
 
@@ -114,12 +118,22 @@ class BiPCM:
         :param constraint: constraint on the degrees of either the row-nodes
             (``True``) or column-nodes (``False``)
         :type constraint: bool
+
+        :raise AssertionError: raise an error if the constraint is neither
+            ``True`` nor ``False
         """
         assert constraint in [False, True], \
             "Constraint has to be True or False."
 
     def set_degree_seq(self):
-        """Set the degree sequence [degrees row-nodes, degrees column-nodes]."""
+        """Set the degree sequence [degrees row-nodes, degrees column-nodes].
+
+        :returns: degree sequence [degrees row-nodes, degrees column-nodes]
+        :rtype: numpy.array
+
+        :raise AssertionError: raise an error if the length of the returned
+            degree sequence does not correspond to the total number of nodes
+        """
         dseq = np.empty(self.num_rows + self.num_columns)
         dseq[self.num_rows:] = np.squeeze(np.sum(self.bin_mat, axis=0))
         dseq[:self.num_rows] = np.squeeze(np.sum(self.bin_mat, axis=1))
@@ -163,7 +177,6 @@ class BiPCM:
         p_mat = self.get_proj_pmat(plam_mat, nlam_mat, bip_set)
         logp = np.log(p_mat[np.triu_indices_from(p_mat, k=1)])
         loglike = logp.sum()
-        print loglike
         return loglike
 
     def get_proj_pmat(self, plam_mat, nlam_mat, bip_set=False):
@@ -193,6 +206,12 @@ class BiPCM:
         :returns: matrix containing the probabilities of the
             :math:`\\Lambda`-motifs
         :rtype: numpy.array
+
+        :raise NameError: raise an error if the parameter ``bip_set`` is
+            neither ``True`` nor ``False``
+        :raise AssertionError: raise an error if shapes of the probability
+            matrix and the matrix with the number of :math:`\\Lambda`-motifs
+            are not equal
         """
         if bip_set:
             m = self.num_columns
@@ -236,6 +255,11 @@ class BiPCM:
         :type filename: str
         :param delim: delimiter between entries in file, default is tab
         :type delim: str
+        :returns: matrix of p-values if ``write==True``
+        :rtype: numpy.array
+
+        :raise NameError: raise an error if the parameter ``bip_set`` is
+            neither ``True`` nor ``False``
         """
         plam_mat = self.get_plambda_matrix()
         nlam_mat = self.get_lambda_motif_matrix(self.bin_mat, bip_set)
@@ -269,6 +293,9 @@ class BiPCM:
         .. note::
             The lower triangular part excluding the diagonal is set to 0 since
             the matrix is symmetric.
+
+        :returns: :math:`\\Lambda`-motif probability matrix
+        :rtype: numpy.array
         """
         if self.const_set:
             ps = self.eprob_seq[:self.num_rows]
@@ -292,6 +319,11 @@ class BiPCM:
         :type bip_set: bool
         :returns: square matrix of observed :math:`\\Lambda`-motifs
         :rtype: numpy.array
+
+        :raise NameError: raise an error if the parameter ``bip_set`` is
+            neither ``True`` nor ``False``
+        :raise AssertionError: raise an error if shape of the probability
+            matrix is not correct
         """
         if bip_set:
             l2_mat = np.dot(mm, np.transpose(mm))
@@ -325,7 +357,7 @@ class BiPCM:
             :math:`pval(k) = Pr(X >= k) = 1 - Pr(X < k) = 1 - cdf(k) + pmf(k)`
 
             The lower triangular part (including the diagonal) of the returned
-            matrixis set to zero.
+            matrix is set to zero.
 
         :param plam_mat: matrix of :math:`\\Lambda`-motif probabilities
         :type plam_mat: numpy.array
@@ -335,6 +367,12 @@ class BiPCM:
         :type bip_set: bool
         :returns: matrix of the p-values for the :math:`\\Lambda`-motifs
         :rtype: numpy.array
+
+        :raise NameError: raise an error if the parameter ``bip_set`` is
+            neither ``True`` nor ``False``
+        :raise AssertionError: raise an error if shapes of the probability
+            matrix and the matrix with the number of :math:`\\Lambda`-motifs
+            are not equal
         """
         if bip_set:
             m = self.num_columns
