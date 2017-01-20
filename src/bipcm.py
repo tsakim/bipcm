@@ -292,10 +292,15 @@ class BiPCM:
     def get_plambda_matrix(self):
         """Return the :math:`\\Lambda`-motif probability matrix.
 
-        Return a square matrix of Lambda probabilities for the nodes given
-        the degree constraints on the node set self.const_set.
+        Return a square matrix :math:`M` of Lambda probabilities for the nodes
+        given the degree constraints on the node set self.const_set.
 
         .. note::
+            If :math:`N_i` are the nodes with constrained degrees,
+            :math:`M_{ij} = p(\\Lambda_{ij}` is the probability of nodes
+            :math:`i, j \in N_i` sharing one common neighbor, whereas
+            :math:`M_{ii}` is the probability that two nodes of the opposite
+            layer have node :math:`i \in N_i` as a common neighbor.
             The lower triangular part excluding the diagonal is set to 0 since
             the matrix is symmetric.
 
