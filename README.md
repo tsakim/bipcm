@@ -1,68 +1,50 @@
-# Bipartite Partial Configuration Model with one-sided constraints for Python
+# Bipartite Partial Configuration Model for Python
 
-## About
-The module contains a Python implementation of the Bipartite Partial
-Configuration Model with one-sided degree constraints (BiPCM), which can be
-used as a statistical null model for undirected and binary bipartite networks
-(see reference \[1\]).
+The Bipartite Partial Configuration Model (BiPCM) is a statistical null model
+for binary bipartite networks. It offers an unbiased method of
+analyzing node similarities and obtaining statistically validated monopartite
+projections \[Saracco2016\].
 
-Given the biadjacency matrix of a bipartite network, the probabilities of links
-between nodes of different bipartite network layers are calculated for the
-corresponding ensemble average graph. 
+The BiPCM is related to the [Bipartite Configuration Model
+(BiCM)](https://github.com/tsakim/bicm) \[Saracco2015\], but imposes only
+constraints on the degrees of one bipartite node layer. It belongs to a series
+of entropy-based null model for binary biparite networks, see also
 
-To address the question of node similarity within one bipartite layer, it is
-possible to perform a statistical validation of the number of common nearest
-neighbors and to calculate the p-values of the corresponding Lambda-motifs, as
-described by Saracco et al. \[1\].
+* [BiCM](https://github.com/tsakim/bicm)
+* [BiRG](https://github.com/tsakim/birg)
+
+Please consult the original articles for details about the underlying methods
+and applications to user-movie and international trade databases
+\[Saracco2016, Straka2016\].
  
 ## Author 
-Mika Straka
 
-### This Version
-The newest version can be found on
-[https://github.com/tsakim/pbicm](https://github.com/tsakim/bicmi).
+Mika J. Straka
 
-## Dependencies
-* [os](https://docs.python.org/2/library/os.html)
-* [scipy](https://www.scipy.org/)
-* [numpy](www.numpy.org)
-* [doctest](https://docs.python.org/2/library/doctest.html)
-* [poibin](https://github.com/tsakim/poibin) Module for the Poisson Binomial
-  probability distribution 
+## Version and Documentation
 
-## Usage
-Be `input_mat` a two-dimensional binary numpy array describing the biadjacency
-matrix of an undirected bipartite network. The nodes of the two distinct
-bipartite layers are ordered along the columns and rows, respectively. In the
-algorithm, the two layers are identified by the boolean values `True` for the
-row-nodes and `False` for the column-nodes.
+The newest version of the module can be found on
+[https://github.com/tsakim/bipcm](https://github.com/tsakim/bipcm).
 
-Import the module
-```python
-from src.pbicm import BiPCM
-```
-and initialize the Bipartite Partial Configuration Model with one sided
-constraint for the matrix `input_mat` with 
-```python
-cma = BiPCM(bin_mat=td, constraint=<constraint>)
-```
-where `<constraint> == True` constrains the degrees of the row-nodes and
-`<constraint> == False` the degrees of the column nodes.
+The complete documentation is available at
+[http://bipcm.readthedocs.io/](http://bipcm.readthedocs.io/) and in the file
+`docs/BiPCM_manual.pdf`
 
-In order to analyze the similarity of the row-layer nodes and to save the
-p-values of the corresponding Lambda-motifs in the folder `pbicm/output/`,
-use
-```python
-cma.lambda_motifs_main(bip_set=True, write=True, filename=<filename>, delim='\t') ```
-```
-For the column-layer nodes, use
-```python
-cma.lambda_motifs_main(bip_set=False, write=True, filename=<filename>, delim='\t')
-```
-`bip_set` defines the bipartite node set for which the p-values should be
-saved. The default name of the ouput file is
-`pbicm_pval_constr_<constraint>_proj_<bip_set>.csv`.
+## How to cite
 
+If you use the `bipcm` module, please cite its location on Github
+[https://github.com/tsakim/bipcm](https://github.com/tsakim/bipcm) and the
+original article \[Saracco2016\]. 
+
+### References
+
+\[Saracco2015\] [F. Saracco, R. Di Clemente, A. Gabrielli, T. Squartini, Randomizing bipartite networks: the case of the World Trade Web, Scientific Reports 5, 10595 (2015)](http://www.nature.com/articles/srep10595).
+
+\[Saracco2016\] [F. Saracco, M. J. Straka, R. Di Clemente, A. Gabrielli, G. Caldarelli, T. Squartini, Inferring monopartite projections of bipartite networks: an entropy-based approach, arXiv preprint arXiv:1607.02481](https://arxiv.org/abs/1607.02481)
+
+\[Straka2016\] [M. J. Straka, F. Saracco, G. Caldarelli, Product Similarities in International Trade from Entropy-based Null Models, Complex Networks 2016, 130-132 (11 2016), ISBN 978-2-9557050-1-8](http://www.complexnetworks.org/BookOfAbstractCNA16.pdf)
+
+<!---
 It is also possible to calculate the probabilites of two nodes (i, j) having 0, 1, ..., M nearest neighbors in common, where M is the number of nodes in the opposite bipartite layer. To do so for the row-nodes, execute 
 ```python
 cma.save_lambda_probdist(bip_set=True, write=True, filename=<filename>, delim='\t')
@@ -72,31 +54,7 @@ For the column-nodes, use `bip_set=False`.The default name of the ouput file is 
 Note that, if `<constraint> == <bip_set>`, the output file contains N(N - 1) rows for the node pairs (1, 2), (1, 3), ..., (1, N), (2, 3), ..., (N - 1, N), and M + 1 columns contain the probabilities of having 0, 1, ..., M common neighbors.
 If `<constraint> != <bip_set>`, the file contains only one row containing the probabilities for two nodes (i, j) sharing 0, 1, ..., M + 1 common neighbors, since the probability distribution is the same for all node pairs in the bipartite nodes set `bip_set`.  
 
-### NB: Main folder
-Note that saving the files requires the name of the main directory,
-which contains the folder `src` and thus the file `src/pbicm.py`.
-If the name of the main directory is *not* the default `pbicm`, the BiPCM
-instance has to be initialized as 
-```python
-cma = BiPCM(bin_mat=td, constraint=<constraint>, main_dir=<main directory name>)
-```
-
-## Testing
-The methods have been implemented using the doctest module. To run the tests,
-execute 
-```
-$ python -m doctest pbicm_tests.txt
-```
-in the folder `src` in the command line. If you want to run the tests in
-verbose mode, use 
-```
-$ python -m doctest -v pbicm_tests.txt
-```
-Note that `pbicm.py` and `pbicm_tests.txt` have to be in the same directory.
-
-## References
-* \[1\] [Saracco, Di Clemente, Gabrielli, Squartini - Randomizing bipartite networks:
-the case of the World Trade Web](http://www.nature.com/articles/srep10595)
+-->
 
 ---
-Copyright (c) 2015-2016 Mika J. Straka 
+Copyright (c) 2015-2017 Mika J. Straka 
