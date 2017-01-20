@@ -29,7 +29,6 @@ The newest version of the module can be found on
 The complete documentation is available at
 [http://bipcm.readthedocs.io/](http://bipcm.readthedocs.io/) and in the file
 `docs/BiPCM_manual.pdf`
-<<<<<<< HEAD
 
 ## How to cite
 
@@ -37,15 +36,6 @@ If you use the `bipcm` module, please cite its location on Github
 [https://github.com/tsakim/bipcm](https://github.com/tsakim/bipcm) and the
 original article \[Saracco2016\]. 
 
-=======
-
-## How to cite
-
-If you use the `bipcm` module, please cite its location on Github
-[https://github.com/tsakim/bipcm](https://github.com/tsakim/bipcm) and the
-original article \[Saracco2016\]. 
-
->>>>>>> d18f8bc617dea777e57d4d9d8b306ce6e96d5150
 ### References
 
 \[Saracco2015\] [F. Saracco, R. Di Clemente, A. Gabrielli, T. Squartini, Randomizing bipartite networks: the case of the World Trade Web, Scientific Reports 5, 10595 (2015)](http://www.nature.com/articles/srep10595).
