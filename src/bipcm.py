@@ -126,9 +126,9 @@ class BiPCM:
             "Constraint has to be True or False."
 
     def set_degree_seq(self):
-        """Set the degree sequence [degrees row-nodes, degrees column-nodes].
+        """Return the node degree sequence of the input matrix.
 
-        :returns: degree sequence [degrees row-nodes, degrees column-nodes]
+        :returns: node degree sequence [degrees row-nodes, degrees column-nodes]
         :rtype: numpy.array
 
         :raise AssertionError: raise an error if the length of the returned
