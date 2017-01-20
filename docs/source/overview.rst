@@ -37,13 +37,11 @@ verification. For an illustration and further details, please refer to
 Dependencies
 --------------------------------------------------------------------------------
 
-``bicm`` is written in `Python 2.7` and uses the following modules:
+``bipcm`` is written in `Python 2.7` and uses the following modules:
 
 * `poibin <https://github.com/tsakim/poibin>`_ Module for the Poisson Binomial
   probability distribution 
 * `scipy <https://www.scipy.org/>`_
 * `numpy <www.numpy.org>`_
-* `multiprocessing <https://docs.python.org/2/library/multiprocessing.html>`_
-* `ctypes <https://docs.python.org/2/library/ctypes.html>`_
 * `doctest <https://docs.python.org/2/library/doctest.html>`_ For unit testing
 
