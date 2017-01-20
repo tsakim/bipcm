@@ -33,10 +33,11 @@ Usage:
     Import the module and initialize the Bipartite Partial Configuration Model::
 
         >>> from src.bipcm import BiPCM
-        >>> cma = BiPCM(bin_mat=mat, constraint=<constraint>)
+        >>> cma = BiPCM(bin_mat=mat, constraint=<bool>)
 
-    where ``<constraint> = True`` constrains the degrees of the row-nodes and
-    ``<constraint> = False`` the degrees of the column nodes.
+    The parameter ``constraint`` specifies whether the degrees of the row-nodes
+    (``constraint = True``) or the degrees of the column-nodes
+    (``constraint = False``) should be constrained.
 
     In order to analyze the similarity of the row-layer nodes and to save the
     p-values of the corresponding :math:`\\Lambda`-motifs, use::
@@ -52,7 +53,7 @@ Usage:
     path declaration. The default name of the output file is
     *pval_constr_<constraint>_proj_<bip_set>.csv*, where *<contraint>* and
     *<bip_set>* are either *rows* or *columns* depending on the degree
-    constraints and the parameter choice in ``lambda_motifs_main``. By default,
+    constraint and the parameter choice in ``lambda_motifs_main``. By default,
     the values in the file are separated by tabs, which can be changed using the
     ``delim`` keyword.
 
