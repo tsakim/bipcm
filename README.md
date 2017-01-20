@@ -8,10 +8,10 @@ projections \[Saracco2016\].
 The BiPCM is related to the [Bipartite Configuration Model
 (BiCM)](https://github.com/tsakim/bicm) \[Saracco2015\], but imposes only
 constraints on the degrees of one bipartite node layer. It belongs to a series
-of entropy-based null model for binary biparite networks, see also
+of entropy-based null model for binary bipartite networks, see also
 
-* [BiCM](https://github.com/tsakim/bicm)
-* [BiRG](https://github.com/tsakim/birg)
+* [BiCM](https://github.com/tsakim/bicm) - Bipartite Configuration Model
+* [BiRG](https://github.com/tsakim/birg) - Bipartite Random Graph
 
 Please consult the original articles for details about the underlying methods
 and applications to user-movie and international trade databases

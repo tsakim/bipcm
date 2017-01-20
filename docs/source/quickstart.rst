@@ -42,7 +42,7 @@ For the column-layer nodes, use::
 ``bip_set`` selects the bipartite node set for which the p-values should be
 calculated and saved. The filename *<filename>* should contain a relative path
 declaration. The default name of the output file is
-*pval_constr_<constraint>_proj_<bip_set>.csv*, where *<contraint>* and
+*pval_constr_<constraint>_proj_<bip_set>.csv*, where *<constraint>* and
 *<bip_set>* are either *rows* or *columns* depending on the degree constraint
 and the parameter choice in ``lambda_motifs_main``. By default, the values in
 the file are separated by tabs, which can be changed using the ``delim``

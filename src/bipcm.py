@@ -51,7 +51,7 @@ Usage:
     ``bip_set`` selects the bipartite node set for which the p-values should be
     calculated and saved. The filename *<filename>* should contain a relative
     path declaration. The default name of the output file is
-    *pval_constr_<constraint>_proj_<bip_set>.csv*, where *<contraint>* and
+    *pval_constr_<constraint>_proj_<bip_set>.csv*, where *<constraint>* and
     *<bip_set>* are either *rows* or *columns* depending on the degree
     constraint and the parameter choice in ``lambda_motifs_main``. By default,
     the values in the file are separated by tabs, which can be changed using the
@@ -253,10 +253,10 @@ class BiPCM:
 
         :param bip_set: select row-nodes (``True``) or column-nodes (``False``)
         :type bip_set: bool
-        :param write: if ``True``, the pvalues are saved in the specified file
+        :param write: if ``True``, the p-values are saved in the specified file
         :type write: bool
         :param filename: name of the file which will contain the p-values,
-            default is *pval_constr_<contraint>_proj_<rows OR columns>.csv*
+            default is *pval_constr_<constraint>_proj_<rows OR columns>.csv*
         :type filename: str
         :param delim: delimiter between entries in file, default is tab
         :type delim: str
@@ -420,7 +420,7 @@ class BiPCM:
 #        :param write: if True, the pvalues are saved in an external file
 #        :type write: bool
 #        :param filename: name of the output file, default name is
-#            bipcm_pval_constr_<contraint>_proj_<rows OR columns>.csv
+#            bipcm_pval_constr_<constraint>_proj_<rows OR columns>.csv
 #        :param delim: delimiter to use if file is saved as .csv
 #        :param binary: if true, save as binary .npy file. Otherwise as .csv
 #                        file
@@ -566,7 +566,7 @@ class BiPCM:
         The matrix can either be saved as a binary NumPy ``.npy`` file or as a
         human-readable CSV file.
 
-        .. note:: The relative path has to be provided in the filname, e.g.
+        .. note:: The relative path has to be provided in the filename, e.g.
                 *../data/pvalue_matrix.csv*
 
         :param mat: two-dimensional matrix
