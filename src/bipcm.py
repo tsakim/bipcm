@@ -297,12 +297,12 @@ class BiPCM:
 
         .. note::
             If :math:`N_i` are the nodes with constrained degrees,
-            :math:`M_{ij} = p(\\Lambda_{ij}` is the probability of nodes
+            :math:`M_{ij} = p(\\Lambda_{ij})` is the probability of nodes
             :math:`i, j \in N_i` sharing one common neighbor, whereas
             :math:`M_{ii}` is the probability that two nodes of the opposite
             layer have node :math:`i \in N_i` as a common neighbor.
-            The lower triangular part excluding the diagonal is set to 0 since
-            the matrix is symmetric.
+            The lower triangular part of :math:`M` excluding the diagonal is
+            set to 0 since the matrix is symmetric.
 
         :returns: :math:`\\Lambda`-motif probability matrix
         :rtype: numpy.array
