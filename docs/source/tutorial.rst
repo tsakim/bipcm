@@ -30,6 +30,9 @@ identified by the boolean values ``True`` for the **row-nodes** and ``False`` fo
 the **column-nodes**. In our example image, the row-nodes are colored in blue
 (top layer) and the column-nodes in red (bottom layer).
 
+.. note:: 
+    Tutorial has to be finished.
+
 .. Let's get started by importing the necessary modules::
 
 ..     >>> import numpy

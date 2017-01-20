@@ -29,33 +29,33 @@ Usage:
 # BiPCM.set_degree_seq ---------------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 1, 1]])
-    >>> cm = BiPCM(td, True)
-    >>> cm.set_degree_seq()
+    >>> pcm = BiPCM(td, True)
+    >>> pcm.set_degree_seq()
     array([ 2.,  3.,  2.,  2.,  1.])
 
 # BiPCM.get_edge_prob_seq ------------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 1, 1]])
-    >>> cm = BiPCM(td, True)
-    >>> np.around(cm.get_edge_prob_seq(), decimals=2)
+    >>> pcm = BiPCM(td, True)
+    >>> np.around(pcm.get_edge_prob_seq(), decimals=2)
     array([ 0.67,  1.  ,  1.  ,  1.  ,  0.5 ])
 
 # BiPCM.get_plambda_matrix -----------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 0, 1]])
-    >>> cm = BiPCM(td, True)
-    >>> np.around(cm.get_plambda_matrix(), decimals=2)
+    >>> pcm = BiPCM(td, True)
+    >>> np.around(pcm.get_plambda_matrix(), decimals=2)
     array([[ 0.44,  0.44],
            [ 0.  ,  0.44]])
-    >>> cm = BiPCM(td, False)
-    >>> np.around(cm.get_plambda_matrix(), decimals=2)
+    >>> pcm = BiPCM(td, False)
+    >>> np.around(pcm.get_plambda_matrix(), decimals=2)
     array([[ 1.  ,  0.5 ,  0.5 ],
            [ 0.  ,  0.25,  0.25],
            [ 0.  ,  0.  ,  0.25]])
 
     >>> td = np.array([[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
-    >>> cm = BiPCM(td, False)
-    >>> np.around(cm.get_plambda_matrix(), decimals=2)
+    >>> pcm = BiPCM(td, False)
+    >>> np.around(pcm.get_plambda_matrix(), decimals=2)
     array([[ 0.56,  0.56,  0.56,  0.56],
            [ 0.  ,  0.56,  0.56,  0.56],
            [ 0.  ,  0.  ,  0.56,  0.56],
@@ -64,28 +64,28 @@ Usage:
 # BiPCM.get_lambda_motif_matrix ------------------------------------------------------
 
     >>> td = np.array([[1, 1, 0], [1, 0, 1], [1, 1, 0]])
-    >>> cm = BiPCM(td, True)
-    >>> cm.get_lambda_motif_matrix(cm.bin_mat, True)
+    >>> pcm = BiPCM(td, True)
+    >>> pcm.get_lambda_motif_matrix(pcm.bin_mat, True)
     array([[0, 1, 2],
            [1, 0, 1],
            [2, 1, 0]])
-    >>> cm.get_lambda_motif_matrix(cm.bin_mat, False)
+    >>> pcm.get_lambda_motif_matrix(pcm.bin_mat, False)
     array([[0, 2, 1],
            [2, 0, 0],
            [1, 0, 0]])
 
     >>> td = np.array([[1, 1, 0], [1, 0, 1]])
-    >>> cm = BiPCM(td, True)
-    >>> cm.get_lambda_motif_matrix(cm.bin_mat, True)
+    >>> pcm = BiPCM(td, True)
+    >>> pcm.get_lambda_motif_matrix(pcm.bin_mat, True)
     array([[0, 1],
            [1, 0]])
-    >>> cm.get_lambda_motif_matrix(cm.bin_mat, False)
+    >>> pcm.get_lambda_motif_matrix(pcm.bin_mat, False)
     array([[0, 1, 1],
            [1, 0, 0],
            [1, 0, 0]])
     >>> td = np.array([[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
-    >>> cm = BiPCM(td, False)
-    >>> np.around(cm.get_lambda_motif_matrix(cm.bin_mat, False), decimals=1)
+    >>> pcm = BiPCM(td, False)
+    >>> np.around(pcm.get_lambda_motif_matrix(pcm.bin_mat, False), decimals=1)
     array([[0, 2, 2, 2],
            [2, 0, 2, 2],
            [2, 2, 0, 2],
@@ -94,41 +94,41 @@ Usage:
 # BiPCM.get_lambda_pvalues ---------------------------------------------------------
 
     >>> td = np.array([[0, 1, 1, 1],[1, 0, 1, 1],[1, 1, 0, 1],[1, 1, 1, 0]])
-    >>> cm = BiPCM(td, False)
-    >>> pl2m = cm.get_plambda_matrix()
-    >>> nl2m = cm.get_lambda_motif_matrix(cm.bin_mat, False)
-    >>> np.around(cm.get_lambda_pvalues(pl2m, nl2m, False), decimals=2)
+    >>> pcm = BiPCM(td, False)
+    >>> pl2m = pcm.get_plambda_matrix()
+    >>> nl2m = pcm.get_lambda_motif_matrix(pcm.bin_mat, False)
+    >>> np.around(pcm.get_lambda_pvalues(pl2m, nl2m, False), decimals=2)
     array([[ 0.  ,  0.77,  0.77,  0.77],
            [ 0.  ,  0.  ,  0.77,  0.77],
            [ 0.  ,  0.  ,  0.  ,  0.77],
            [ 0.  ,  0.  ,  0.  ,  0.  ]])
-    >>> np.around(cm.get_lambda_pvalues(pl2m, nl2m, True), decimals=2)
+    >>> np.around(pcm.get_lambda_pvalues(pl2m, nl2m, True), decimals=2)
     array([[ 0.  ,  0.77,  0.77,  0.77],
            [ 0.  ,  0.  ,  0.77,  0.77],
            [ 0.  ,  0.  ,  0.  ,  0.77],
            [ 0.  ,  0.  ,  0.  ,  0.  ]])
 
     >>> td = np.array([[0, 1, 1], [1, 0, 0]])
-    >>> cm = BiPCM(td, True)
-    >>> np.around(cm.eprob_seq, decimals=2)
+    >>> pcm = BiPCM(td, True)
+    >>> np.around(pcm.eprob_seq, decimals=2)
     array([ 0.67,  0.33,  0.5 ,  0.5 ,  0.5 ])
-    >>> pl2m = cm.get_plambda_matrix()
+    >>> pl2m = pcm.get_plambda_matrix()
     >>> np.around(pl2m, decimals=2)
     array([[ 0.44,  0.22],
            [ 0.  ,  0.11]])
-    >>> nl2m = cm.get_lambda_motif_matrix(cm.bin_mat, True)
+    >>> nl2m = pcm.get_lambda_motif_matrix(pcm.bin_mat, True)
     >>> nl2m
     array([[0, 0],
            [0, 0]])
-    >>> np.around(cm.get_lambda_pvalues(pl2m, nl2m, True), decimals=2)
+    >>> np.around(pcm.get_lambda_pvalues(pl2m, nl2m, True), decimals=2)
     array([[ 0.,  1.],
            [ 0.,  0.]])
-    >>> nl2m = cm.get_lambda_motif_matrix(cm.bin_mat, False)
+    >>> nl2m = pcm.get_lambda_motif_matrix(pcm.bin_mat, False)
     >>> nl2m
     array([[0, 0, 0],
            [0, 0, 1],
            [0, 1, 0]])
-    >>> np.around(cm.get_lambda_pvalues(pl2m, nl2m, False), decimals=2)
+    >>> np.around(pcm.get_lambda_pvalues(pl2m, nl2m, False), decimals=2)
     array([[ 0.  ,  1.  ,  1.  ],
            [ 0.  ,  0.  ,  0.51],
            [ 0.  ,  0.  ,  0.  ]])
@@ -136,19 +136,19 @@ Usage:
 # BiPCM.get_lambda_probdist ----------------------------------------------------
 
 #    >>> td = np.array([[1, 1],[1, 1],[0, 1]])
-#    >>> cm = BiPCM(td, True)
+#    >>> pcm = BiPCM(td, True)
 #
-#    >>> pl2m = cm.get_plambda_matrix()
+#    >>> pl2m = pcm.get_plambda_matrix()
 #    >>> pl2m
 #    array([[ 1.  ,  1.  ,  0.5 ],
 #           [ 0.  ,  1.  ,  0.5 ],
 #           [ 0.  ,  0.  ,  0.25]])
-#    >>> lprobs = cm.get_lambda_probdist(pl2m, bip_set=True)
+#    >>> lprobs = pcm.get_lambda_probdist(pl2m, bip_set=True)
 #    >>> lprobs
 #    array([[ 0.  ,  0.  ,  1.  ],
 #           [ 0.25,  0.5 ,  0.25],
 #           [ 0.25,  0.5 ,  0.25]])
-#    >>> lprobs2 = cm.get_lambda_probdist(pl2m, bip_set=False)
+#    >>> lprobs2 = pcm.get_lambda_probdist(pl2m, bip_set=False)
 #    >>> lprobs2
 #    array([[ -5.55111512e-17,   5.55111512e-17,   7.50000000e-01,
 #              2.50000000e-01]])

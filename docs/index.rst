@@ -11,8 +11,8 @@ The BiPCM is related to the `Bipartite Configuration Model (BiCM)
 on the degrees of one bipartite node layer. It belongs to a series of
 entropy-based null model for binary biparite networks, see also
 
-* `BiCM <https://github.com/tsakim/bicm>`_
-* `BiRG <https://github.com/tsakim/birg>`_
+* `BiCM <https://github.com/tsakim/bicm>`_ - Bipartite Configuration Model
+* `BiRG <https://github.com/tsakim/birg>`_ - Bipartite Random Graph
 
 Please consult the original articles for details about the underlying methods
 and applications to user-movie and international trade databases

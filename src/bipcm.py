@@ -33,7 +33,7 @@ Usage:
     Import the module and initialize the Bipartite Partial Configuration Model::
 
         >>> from src.bipcm import BiPCM
-        >>> cma = BiPCM(bin_mat=mat, constraint=<bool>)
+        >>> pcm = BiPCM(bin_mat=mat, constraint=<bool>)
 
     The parameter ``constraint`` specifies whether the degrees of the row-nodes
     (``constraint = True``) or the degrees of the column-nodes
@@ -42,11 +42,11 @@ Usage:
     In order to analyze the similarity of the row-layer nodes and to save the
     p-values of the corresponding :math:`\\Lambda`-motifs, use::
 
-        >>> cma.lambda_motifs_main(bip_set=True, filename=<filename>)
+        >>> pcm.lambda_motifs_main(bip_set=True, filename=<filename>)
 
     For the column-layer nodes, use::
 
-        >>> cma.lambda_motifs_main(bip_set=False, filename=<filename>)
+        >>> pcm.lambda_motifs_main(bip_set=False, filename=<filename>)
 
     ``bip_set`` selects the bipartite node set for which the p-values should be
     calculated and saved. The filename *<filename>* should contain a relative
@@ -73,12 +73,13 @@ from poibin.poibin import PoiBin
 
 
 class BiPCM:
-    """Bipartite Partial Configuration Model for binary bipartite newtworks
+    """Bipartite Partial Configuration Model for binary bipartite networks.
 
-    This class implements the Bipartite Configuration Model (BiCM), which can
-    be used as a null model for the analysis of undirected and binary bipartite
-    networks. The class provides methods to calculate the biadjacency matrix of
-    the null model and to quantify node similarities in terms of p-values.
+    This class implements the Bipartite Partial Configuration Model (BiPCM),
+    which can be used as a null model for the analysis of undirected and binary
+    bipartite networks. The class provides methods to calculate the biadjacency
+    matrix of the null model and to quantify node similarities in terms of
+    p-values.
     """
 
     def __init__(self, bin_mat, constraint):
@@ -88,7 +89,7 @@ class BiPCM:
                 of a bipartite graph with the nodes of one layer along the rows
                 and the nodes of the other layer along the columns.
         :type bin_mat: numpy.array
-        :param constraint: constraints either the degrees of the row-nodes
+        :param constraint: constrains either the degrees of the row-nodes
             (``True``), or the degrees of the column-nodes columns (``False``)
         :type constraint: bool
         """
@@ -116,12 +117,12 @@ class BiPCM:
     def check_constraint(constraint):
         """Check that the constraint parameter is either ``True`` of ``False``.
 
-        :param constraint: constraint on the degrees of either the row-nodes
+        :param constraint: constrains the degrees of either the row-nodes
             (``True``) or column-nodes (``False``)
         :type constraint: bool
 
         :raise AssertionError: raise an error if the constraint is neither
-            ``True`` nor ``False
+            ``True`` nor ``False``
         """
         assert constraint in [False, True], \
             "Constraint has to be True or False."
@@ -192,7 +193,10 @@ class BiPCM:
         Otherwise, all the node pairs follow the same Poisson Binomial
         distribution.
 
-        The probability mass function is given by :math:`pmf(k) = Pr(X = k)`.
+        The probability mass function is given by
+
+        .. math::
+            pmf(k) = Pr(X = k)
 
         .. note::
             The lower triangular part including the diagonal is set to 0 since
@@ -351,12 +355,13 @@ class BiPCM:
         If ``bip_set`` corresponds to the constrained bipartite node set, the
         :math:`\\Lambda`-motifs follow a Binomial probability distribution.
         Otherwise, all the node pairs follow the same Poisson Binomial
-        probability distribution.
+        probability distribution. The p-values are calculated as
+
+        .. math::
+
+            p_{val}(k) = Pr(X >= k) = 1 - Pr(X < k) = 1 - cdf(k) + pmf(k)
 
         .. note::
-
-            :math:`pval(k) = Pr(X >= k) = 1 - Pr(X < k) = 1 - cdf(k) + pmf(k)`
-
             The lower triangular part (including the diagonal) of the returned
             matrix is set to zero.
 

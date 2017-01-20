@@ -1,16 +1,10 @@
 BiPCM Quickstart
 ================================================================================
 
-If you want to get started right away, go ahead and follow the summary below.
-The ``bipcm`` module encompasses essentially two steps for the analysis of node
-similarities in bipartite networks:
-
-#. given an input matrix, create the biadjacency matrix of the BiPCM null model
-#. perform a statistical validation of the similarities of nodes in the same
-   layer
-  
-The validated node similarities can be used to obtain an unbiased monopartite
-projection of the bipartite network, as illustrated in [Saracco2016]_.
+The calculation of the p-values of node similarities with the ``bipcm`` module
+is straightforward as shown below. The validated node similarities can be used
+to obtain an unbiased monopartite projection of the bipartite network, as
+illustrated in [Saracco2016]_.
 
 For more detailed explanations of the methods, please refer to [Saracco2016]_,
 the :ref:`tutorial` and the :ref:`api`.
@@ -29,7 +23,7 @@ layers are identified by the boolean values ``True`` for the **row-nodes** and
 Import the module and initialize the Bipartite Partial Configuration Model:: 
 
     >>> from src.bipcm import BiPCM
-    >>> cma = BiPCM(bin_mat=mat, constraint=<bool>)
+    >>> pcm = BiPCM(bin_mat=mat, constraint=<bool>)
 
 The parameter ``constraint`` specifies whether the degrees of the
 row-nodes (``constraint = True``) or the degrees of the column-nodes
@@ -39,11 +33,11 @@ In order to analyze the similarity of the row-layer nodes and to save the
 p-values of the corresponding :math:`\Lambda`-motifs, i.e. of the number of
 shared neighbors [Saracco2016]_, use::
 
-    >>> cma.lambda_motifs_main(bip_set=True, filename=<filename>)
+    >>> pcm.lambda_motifs_main(bip_set=True, filename=<filename>)
 
 For the column-layer nodes, use::
 
-    >>> cma.lambda_motifs_main(bip_set=False, filename=<filename>)
+    >>> pcm.lambda_motifs_main(bip_set=False, filename=<filename>)
 
 ``bip_set`` selects the bipartite node set for which the p-values should be
 calculated and saved. The filename *<filename>* should contain a relative path
@@ -60,7 +54,7 @@ and to obtain statistically validated monopartite projections [Saracco2016]_.
 If the p-values should not be saved but returned by 
 ``lambda_motifs_main``, use::
 
-    >>> cma.lambda_motifs_main(bip_set=True, write=False)
+    >>> pcm.lambda_motifs_main(bip_set=True, write=False)
 
 .. By default, the file is saved in a human-readable CSV format. The information can also be saved as a binary NumPy file ``.npy`` by using::
 
