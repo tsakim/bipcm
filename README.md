@@ -1,7 +1,7 @@
 # Bipartite Partial Configuration Model for Python
 
 The Bipartite Partial Configuration Model (BiPCM) is a statistical null model
-for binary bipartite networks. It offers an unbiased method of
+for binary bipartite networks. It offers an unbiased method for  
 analyzing node similarities and obtaining statistically validated monopartite
 projections \[Saracco2016\].
 

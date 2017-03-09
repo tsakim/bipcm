@@ -2,14 +2,14 @@ Bipartite Partial Configuration Model - Documentation
 ================================================================================
 
 The Bipartite Partial Configuration Model (BiPCM) is a statistical null model
-for binary bipartite networks. It offers an unbiased method of
+for binary bipartite networks. It offers an unbiased method for  
 analyzing node similarities and obtaining statistically validated monopartite
 projections [Saracco2016]_.
 
 The BiPCM is related to the `Bipartite Configuration Model (BiCM)
 <https://github.com/tsakim/bicm>`_ [Saracco2015]_, but imposes only constraints
 on the degrees of one bipartite node layer. It belongs to a series of
-entropy-based null model for binary biparite networks, see also
+entropy-based null models for binary biparite networks, see also
 
 * `BiCM <https://github.com/tsakim/bicm>`_ - Bipartite Configuration Model
 * `BiRG <https://github.com/tsakim/birg>`_ - Bipartite Random Graph

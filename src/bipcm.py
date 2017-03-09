@@ -77,9 +77,9 @@ class BiPCM:
 
     This class implements the Bipartite Partial Configuration Model (BiPCM),
     which can be used as a null model for the analysis of undirected and binary
-    bipartite networks. The class provides methods to calculate the biadjacency
-    matrix of the null model and to quantify node similarities in terms of
-    p-values.
+    bipartite networks. The class provides methods for calculating the
+    biadjacency matrix of the null model and for quantifying node similarities
+    in terms of p-values.
     """
 
     def __init__(self, bin_mat, constraint):
